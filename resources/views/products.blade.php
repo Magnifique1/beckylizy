@@ -2,13 +2,13 @@
 
 @section('content')
 
-    <section class="breadcrumb-section set-bg" data-setbg="{{asset('img/breadcrumb.jpg')}}">
+    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('img/breadcrumb.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
                         @foreach($selected_cat as $sc)
-                        <h2>{{$sc->name}}</h2>
+                            <h2>{{$sc->name}}</h2>
                         @endforeach
                     </div>
                 </div>
@@ -18,12 +18,14 @@
     <!-- Featured Section Begin -->
     <section class="featured spad">
         <div class="container">
+            @include('partials.alerts')
             <div class="row featured__filter">
-                @foreach($products as $pd)
+                @foreach($products as $product)
                     <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                         <div class="product__discount__item">
-                            <div class="product__discount__item__pic set-bg" data-setbg="{{ config('app.url') . '/uploads/img/' . $pd->image }}">
-                                @if($pd->qty_available == 0)
+                            <div class="product__discount__item__pic set-bg"
+                                 data-setbg="{{ config('app.url') . '/uploads/img/' . $product->image }}">
+                                @if($product->qty_available == 0)
                                     <div class="sidebar__item__size">
                                         <label for="tiny">
                                             Out of Stock
@@ -33,18 +35,25 @@
                                 @endif
                             </div>
                             <div class="product__discount__item__text">
-                                <span>{{$pd->cname}}</span>
-                                <h5><a href="#">{{$pd->name}}</a></h5>
-                                <h5>KES {{number_format($pd->price_inc_tax)}}</h5>
+                                <span>{{$product->cname}}</span>
+                                <h5><a href="#">{{$product->name}}</a></h5>
+                                <h5>KES {{number_format($product->price_inc_tax)}}</h5>
                             </div>
-                            <div class="product__details__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
+                            <form action="{{ route('cart.store') }}" method="post">
+                                @csrf
+
+                                <input type="hidden" name="_id" value="{{ $product->id }}">
+                                <div class="product__details__quantity">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" value="1" name="quantity">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button type="button" class="btn btn-success" @if($pd->qty_available == 0) disabled @endif>ADD TO CART</button>
+                                <button type="submit" class="btn btn-success"
+                                        @if($product->qty_available == 0) disabled @endif>ADD TO CART
+                                </button>
+                            </form>
                         </div>
                     </div>
 
