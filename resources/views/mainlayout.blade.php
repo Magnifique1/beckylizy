@@ -106,7 +106,8 @@
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="{{\Illuminate\Support\Facades\Route::currentRouteName() == 'home' ? 'active':null}}"><a href="/">Home</a></li>
+                        <li class="{{\Illuminate\Support\Facades\Route::currentRouteName() == 'home' ? 'active':null}}">
+                            <a href="/">Home</a></li>
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Contact Us</a></li>
                     </ul>
@@ -115,9 +116,13 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li>
+                            <a href="{{ route('cart.index') }}"><i class="fa fa-shopping-bag"></i>
+                                <span>{{ Cart::count() }}</span>
+                            </a>
+                        </li>
                     </ul>
-                    <div class="header__cart__price">item: <span>KES 00.00</span></div>
+                    <div class="header__cart__price">Subtotal: <span>KES {{ Cart::subtotal() }}</span></div>
                 </div>
             </div>
         </div>
