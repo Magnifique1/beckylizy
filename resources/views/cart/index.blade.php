@@ -36,7 +36,7 @@
                             @foreach($contents as $content)
                                 <tr>
                                     <td class="shoping__cart__item">
-                                        <img src="{{ asset('img/cart/cart-1.jpg') }}" alt="">
+                                        <img src="{{ config('app.url') . '/uploads/img/' . $content->image }}" alt="">
                                         <h5>{{ $content->name }}</h5>
                                     </td>
                                     <td class="shoping__cart__price">
@@ -46,7 +46,7 @@
                                         <div class="quantity">
                                             <div class="pro-qty"><span class="dec qtybtn">-</span>
                                                 <input type="text" value="{{ $content->qty }}">
-                                                <span class="inc qtybtn">+</span></div>
+{{--                                                <span class="inc qtybtn">+</span></div>--}}
                                         </div>
                                     </td>
                                     <td class="shoping__cart__total">

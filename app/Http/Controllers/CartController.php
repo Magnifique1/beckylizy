@@ -30,6 +30,8 @@ class CartController extends Controller
         // Get the product in the cart
         $contents = Cart::content();
 
+//        return($contents);
+
         // Get the cart subtotal
         $subtotal = Cart::subtotal();
 
@@ -56,14 +58,17 @@ class CartController extends Controller
     {
         // Extract the request data
         $productID = $request->get('_id');
-        $quantity = $request->get('quantity');
+        $productImage = $request->get('_pimage');
+        $productName = $request->get('_pname');
+        $quantity = $request->get('_pqty');
 
         // Get the product data from the DB
 
-        $price = rand(100, 500);
+        $price = $request->get('_pprice');
+
 
         // Add the product to the cart
-        Cart::add($productID, sprintf('Product %d', $productID), $quantity, $price);
+        Cart::add($productID, sprintf('%s', $productImage), sprintf('%s', $productName), $quantity, $price);
 
         return redirect()->back()->with('success', 'Product was added successfully.');
     }

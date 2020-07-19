@@ -43,10 +43,13 @@
                                 @csrf
 
                                 <input type="hidden" name="_id" value="{{ $product->id }}">
+                                <input type="hidden" name="_pname" value="{{ $product->name }}">
+                                <input type="hidden" name="_pprice" value="{{ $product->price_inc_tax }}">
+                                <input type="hidden" name="_pimage" value="{{ $product->image }}">
                                 <div class="product__details__quantity">
                                     <div class="quantity">
                                         <div class="pro-qty">
-                                            <input type="text" value="1" name="quantity">
+                                            <input type="text" value="1" name="_pqty">
                                         </div>
                                     </div>
                                 </div>
