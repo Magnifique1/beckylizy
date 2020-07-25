@@ -10,7 +10,9 @@ Route::get('/products/{cat_id}', 'CategoryProductsController@index')->name('cate
 Route::group([
     'prefix' => 'cart',
     'as' => 'cart.',
-], function(){
- // Add to cart
+], function () {
+    // View cart
+    Route::get('/', 'CartController@index')->name('index');
+    // Add to cart
     Route::post('/', 'CartController@store')->name('store');
 });
