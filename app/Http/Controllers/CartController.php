@@ -68,53 +68,43 @@ class CartController extends Controller
 
 
         // Add the product to the cart
-        Cart::add($productID, sprintf('%s', $productImage), sprintf('%s', $productName), $quantity, $price);
+        Cart::add($productID, sprintf('%s', $productName), $quantity, $price, [
+            'image' => $productImage
+        ]);
 
         return redirect()->back()->with('success', 'Product was added successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param int $id
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $products = array_combine($request->get('rowIds'), $request->get('quantities'));
+
+        foreach ($products as $key => $product) {
+            // Update the product quantity
+            Cart::update($key, (int)$product);
+        }
+
+        return redirect()->back()->with('success', 'Cart has been successfully updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return Response
+     * @param string $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        //
+        if (Cart::get($id)) {
+            Cart::remove($id);
+        }
+
+        return redirect()->back()->with('success', 'Product was removed successfully.');
     }
 }

@@ -15,4 +15,8 @@ Route::group([
     Route::get('/', 'CartController@index')->name('index');
     // Add to cart
     Route::post('/', 'CartController@store')->name('store');
+    // Update cart
+    Route::put('/', 'CartController@update')->name('update');
+    // Remove product from the cart
+    Route::get('/{id}', 'CartController@destroy')->name('remove');
 });
