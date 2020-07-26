@@ -8,7 +8,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class CartController extends Controller
@@ -20,12 +19,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $categories = DB::select("select c.id,c.name,count(p.id) as pcount from categories c
-                                        inner join products p on c.id = p.category_id
-                                        inner join variation_location_details vld on p.id = vld.product_id
-                                        where c.business_id = 2 and vld.location_id = 3
-                                        group by c.id,c.name
-                                        order by c.name asc");
+        $categories = CategoryProductsController::getCategories();
 
         // Get the product in the cart
         $contents = Cart::content();

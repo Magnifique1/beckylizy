@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CategoryProductsController extends Controller
 {
-    public function index($id){
+    public function index($id)
+    {
         $categories = DB::select("select c.id,c.name,count(p.id) as pcount from categories c
                                         inner join products p on c.id = p.category_id
                                         inner join variation_location_details vld on p.id = vld.product_id
@@ -27,10 +27,24 @@ class CategoryProductsController extends Controller
                                         where vld.location_id = 3 and p.category_id = $id
                                         order by p.name asc");
 
-        return view('products',[
-            'categories'=>$categories,
-            'products'=>$products,
-            'selected_cat'=>$selected_cat
+        return view('products', [
+            'categories' => $categories,
+            'products' => $products,
+            'selected_cat' => $selected_cat
         ]);
+    }
+
+    /**
+     * Fet all the categories with the products count
+     * @return array
+     */
+    public static function getCategories()
+    {
+        return DB::select("select c.id,c.name,count(p.id) as pcount from categories c
+                                        inner join products p on c.id = p.category_id
+                                        inner join variation_location_details vld on p.id = vld.product_id
+                                        where c.business_id = 2 and vld.location_id = 3
+                                        group by c.id,c.name
+                                        order by c.name asc");
     }
 }

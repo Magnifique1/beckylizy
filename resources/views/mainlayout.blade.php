@@ -38,7 +38,7 @@
 
     <div class="humberger__menu__widget">
         <div class="header__top__right__auth">
-            <a href="#"><i class="fa fa-user"></i> Login</a>
+            <a href="{{ route('auth.register') }}"><i class="fa fa-user"></i> Register</a>
         </div>
     </div>
 
@@ -89,7 +89,7 @@
                             <a href="#"><i class="fa fa-facebook"></i></a>
                         </div>
                         <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                            <a href="{{ route('auth.register') }}"><i class="fa fa-user"></i> Register</a>
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
 <!-- Header Section End -->
 
 <!-- Hero Section Begin -->
-<section class="hero {{\Illuminate\Support\Facades\Route::currentRouteName() == 'category_products' ? 'hero-normal':null}}">
+<section class="hero hero-normal">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -226,7 +226,7 @@
 <!-- Js Plugins -->
 <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
-<script src="{{asset('js/jquery.nice-select.min.js')}}"></script>
+{{--<script src="{{asset('js/jquery.nice-select.min.js')}}"></script>--}}
 <script src="{{asset('js/jquery-ui.min.js')}}"></script>
 <script src="{{asset('js/jquery.slicknav.js')}}"></script>
 <script src="{{asset('js/mixitup.min.js')}}"></script>
