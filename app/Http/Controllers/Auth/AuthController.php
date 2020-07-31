@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\CategoryProductsController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -41,7 +44,7 @@ class AuthController extends Controller
                 'business_id' => 2,
                 'type' => 'customer',
                 'name' => ucwords(strtolower($request->input('name'))),
-                'password' => bcrypt($request->input('password')),
+                'password' => Hash::make($request->input('password')),
                 'contact_id' => 'ECOM1234',
                 'contact_status' => 'active',
                 'mobile' => $request->input('phone_number'),
@@ -65,6 +68,42 @@ class AuthController extends Controller
             throw new Exception($exception->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Account was created successfully.');
+        // Login the user using their id
+        auth()->loginUsingId($id);
+
+        return redirect()->route('home')->with('success', 'Account was created successfully.');
+    }
+
+    public function showLoginForm()
+    {
+        $categories = CategoryProductsController::getCategories();
+
+        return \view('auth.login', compact('categories'));
+    }
+
+    private function failedAuthException()
+    {
+        throw ValidationException::withMessages([
+            'phone_number' => 'Invalid phone number or password.'
+        ]);
+    }
+
+    public function login(LoginRequest $request)
+    {
+        // Check if the user exists
+        $user = DB::table('contacts')->where('mobile', $request->input('phone_number'))->first();
+
+        if (!$user) {
+            return $this->failedAuthException();
+        }
+        // Attempt to compare the passwords
+        if (!Hash::check($request->input('password'), $user->password)) {
+            return $this->failedAuthException();
+        }
+
+        // Login the user using their id
+        auth()->loginUsingId($user->id);
+
+        return redirect()->route('home');
     }
 }

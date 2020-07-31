@@ -11,6 +11,8 @@ Route::group([
 ], function () {
     Route::get('register', 'AuthController@showRegisterForm')->name('register');
     Route::post('register', 'AuthController@register')->name('register');
+    Route::get('login', 'AuthController@showLoginForm')->name('login');
+    Route::post('login', 'AuthController@login')->name('login');
 });
 
 //Cart routes group
