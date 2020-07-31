@@ -51,9 +51,9 @@
                                         </td>
                                         <td class="shoping__cart__quantity">
                                             <div class="quantity">
-                                                <div class="pro-qty"><span class="dec qtybtn">-</span>
+                                                <div class="pro-qty">
                                                     <input type="text" value="{{ $content->qty }}" name="quantities[]">
-                                                    <span class="inc qtybtn">+</span></div>
+                                                </div>
                                             </div>
                                         </td>
                                         <td class="shoping__cart__total">
