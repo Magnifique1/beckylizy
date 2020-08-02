@@ -28,4 +28,6 @@ Route::group([
     Route::put('/', 'CartController@update')->name('update');
     // Remove product from the cart
     Route::get('/{id}', 'CartController@destroy')->name('remove');
+    Route::post('/create-order', 'CartController@createOrder')->name('create-order')
+        ->middleware('auth');
 });

@@ -18,80 +18,136 @@
     </section>
 
     <section class="shoping-cart spad">
-        <div class="container">
-            @include('partials.alerts')
+        @if(count($contents))
+            <div class="container">
+                @include('partials.alerts')
 
-            <form action="{{ route('cart.update') }}" method="post">
-                @method('put')
-                @csrf
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="shoping__cart__table">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th class="shoping__product">Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($contents as $content)
-                                    <input type="hidden" name="rowIds[]" value="{{ $content->rowId }}">
+                <form action="{{ route('cart.update') }}" method="post">
+                    @method('put')
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="shoping__cart__table">
+                                <table>
+                                    <thead>
                                     <tr>
-                                        <td class="shoping__cart__item">
-                                            <img src="{{ config('app.url') . '/uploads/img/' . $content->image }}"
-                                                 alt="">
-                                            <h5>{{ $content->name }}</h5>
-                                        </td>
-                                        <td class="shoping__cart__price">
-                                            KES {{ number_format($content->price) }}
-                                        </td>
-                                        <td class="shoping__cart__quantity">
-                                            <div class="quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="{{ $content->qty }}" name="quantities[]">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="shoping__cart__total">
-                                            KES {{ number_format($content->price * $content->qty) }}
-                                        </td>
-                                        <td class="shoping__cart__item__close">
-                                            <a href="{{ route('cart.remove',  $content->rowId) }}">
-                                                <span class="icon_close"></span>
-                                            </a>
-                                        </td>
+                                        <th class="shoping__product">Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th></th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($contents as $content)
+                                        <input type="hidden" name="rowIds[]" value="{{ $content->rowId }}">
+                                        <tr>
+                                            <td class="shoping__cart__item">
+                                                <img src="{{ config('app.url') . '/uploads/img/' . $content->image }}"
+                                                     alt="">
+                                                <h5>{{ $content->name }}</h5>
+                                            </td>
+                                            <td class="shoping__cart__price">
+                                                KES {{ number_format($content->price) }}
+                                            </td>
+                                            <td class="shoping__cart__quantity">
+                                                <div class="quantity">
+                                                    <div class="pro-qty">
+                                                        <input type="text" value="{{ $content->qty }}"
+                                                               name="quantities[]">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="shoping__cart__total">
+                                                KES {{ number_format($content->price * $content->qty) }}
+                                            </td>
+                                            <td class="shoping__cart__item__close">
+                                                <a href="{{ route('cart.remove',  $content->rowId) }}">
+                                                    <span class="icon_close"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="shoping__cart__btns">
-                            <a href="{{ route('home') }}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                            <button type="submit" class="btn-success primary-btn cart-btn cart-btn-right">Update Cart
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="shoping__cart__btns">
+                                <a href="{{ route('home') }}" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                                <button type="submit" class="btn-success primary-btn cart-btn cart-btn-right">Update
+                                    Cart
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="shoping__checkout">
+                                <h5>Cart Total</h5>
+                                <ul>
+                                    <li>Subtotal <span>KES {{ $subtotal }}</span></li>
+                                    <li>Total <span>KES {{ $subtotal }}</span></li>
+                                </ul>
+                                <button type="button" class="primary-btn" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                    PROCEED TO CHECKOUT
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Create Order</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="shoping__checkout">
-                            <h5>Cart Total</h5>
-                            <ul>
-                                <li>Subtotal <span>KES {{ $subtotal }}</span></li>
-                                <li>Total <span>KES {{ $subtotal }}</span></li>
-                            </ul>
-                            <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <div class="modal-body">
+                            @auth()
+                                By clicking the button below, a new order will be created and you'll be
+                                directed to payment instructions.
+                            @else
+                                <center>
+                                    <a href="{{ route('auth.login') }}" class="primary-btn">
+                                        <span class="text-center">Login to proceed</span>
+                                    </a>
+                                </center>
+                            @endauth
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                            </button>
+                            <form action="{{ route('cart.create-order') }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-primary" @guest() disabled @endguest>
+                                    Create Order
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+
+        @else
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="alert alert-info" role="alert">
+                            Your cart is empty. Please do some shopping.
+                        </div>
+                        <div class="shoping__cart__btns">
+                            <a href="{{ route('home') }}" class="site-btn">Start Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </section>
 @endsection

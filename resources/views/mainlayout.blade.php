@@ -126,7 +126,7 @@
                     <ul>
                         <li>
                             <a href="{{ route('cart.index') }}"><i class="fa fa-shopping-bag"></i>
-                                <span>{{ Cart::count() }}</span>
+                                <span>{{ count(Cart::content()) }}</span>
                             </a>
                         </li>
                     </ul>
