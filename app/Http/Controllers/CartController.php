@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class CartController extends Controller
 {
@@ -122,9 +123,12 @@ class CartController extends Controller
             return $item->qty * $item->price;
         });
 
-        $taxAmount = $total * 1.14;
+        $taxAmount = $total - ($total / 1.14);
 
         try {
+
+            $transactionCode = Str::random(6);
+
             $transactionID = DB::table('transactions')->insertGetId([
                 'business_id' => 2,
                 'location_id' => 2,
@@ -133,11 +137,14 @@ class CartController extends Controller
                 'is_quotation' => false,
                 'payment_status' => 'due',
                 'contact_id' => $user->id,
+                'invoice_no' => $transactionCode,
                 'transaction_date' => now(),
-                'total_before_tax' => $total - $taxAmount,
+                'total_before_tax' => $total / 1.14,
                 'tax_id' => 2,
                 'tax_amount' => $taxAmount,
                 'discount_type' => 'percentage',
+                'staff_note'=> $transactionCode,
+                'additional_notes'=> $transactionCode,
                 'final_total' => $total,
                 'is_direct_sale' => false,
                 'is_suspend' => false,

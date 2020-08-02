@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/products/{cat_id}', 'CategoryProductsController@index')->name('category_products');//
+Route::get('/myorders', 'OrderHistoryController@index')->name('order_history');//
 
 Route::group([
     'namespace' => 'Auth',

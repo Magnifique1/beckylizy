@@ -1916,6 +1916,11 @@ ol {
 	text-align: left;
 }
 
+.shoping__cart__table table tbody tr td.shoping__cart__item2 {
+    width: 400px;
+    text-align: left;
+}
+
 .shoping__cart__table table tbody tr td.shoping__cart__item img {
 	display: inline-block;
 	margin-right: 25px;
