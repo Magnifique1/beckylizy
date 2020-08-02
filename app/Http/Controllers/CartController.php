@@ -62,7 +62,7 @@ class CartController extends Controller
 
 
         // Add the product to the cart
-        Cart::add($productID, sprintf('%s', $productName), $quantity, $price, [
+        Cart::add($productID, sprintf('%s', $productName), $price,$quantity, [
             'image' => $productImage
         ]);
 

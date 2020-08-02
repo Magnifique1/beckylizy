@@ -85,12 +85,20 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__right">
-                        <div class="header__top__right__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                        </div>
-                        <div class="header__top__right__auth">
-                            <a href="{{ route('auth.register') }}"><i class="fa fa-user"></i> Register</a>
-                        </div>
+
+                        @if(Auth::guest())
+                            <div class="header__top__right__auth" style="margin-right: 10px">
+                                <a href="{{ route('auth.register') }}"><i class="fa fa-user"></i> Register</a>
+                            </div>
+
+                            <div class="header__top__right__auth">
+                                <a href="/login"><i class="fa fa-user"></i> Login</a>
+                            </div>
+                        @else
+                            <div class="header__top__right__auth">
+                                <a href="#"><i class="fa fa-user"></i> Welcome - {{Auth::user()->name}}</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -204,9 +212,7 @@
                     <h6>Useful Links</h6>
                     <ul>
                         <li><a href="#">About Us</a></li>
-                        <li><a href="#">About Our Shop</a></li>
-                        <li><a href="#">Secure Shopping</a></li>
-                        <li><a href="#">Delivery Information</a></li>
+                        <li><a href="#">Contact Us</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>

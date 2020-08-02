@@ -59,6 +59,8 @@
                 <br>
                 @foreach($products as $pd)
                     <div class="col-lg-3 col-md-4 col-sm-6 mix {{\Illuminate\Support\Str::slug($pd->cname)}}">
+                        <br>
+                        <br>
                         <div class="product__discount__item">
                             <div class="product__discount__item__pic set-bg" data-setbg="{{ config('app.url') . '/uploads/img/' . $pd->image }}">
                                 @if($pd->qty_available == 0)
@@ -75,14 +77,14 @@
                                 <h5><a href="#">{{$pd->name}}</a></h5>
                                 <h5>KES {{number_format($pd->price_inc_tax)}}</h5>
                             </div>
-                            <div class="product__details__quantity">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-success add-to-cart-btn" @if($pd->qty_available == 0) disabled @endif>ADD TO CART</button>
+{{--                            <div class="product__details__quantity">--}}
+{{--                                <div class="quantity">--}}
+{{--                                    <div class="pro-qty">--}}
+{{--                                        <input type="text" value="1">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <button type="button" class="btn btn-success add-to-cart-btn" @if($pd->qty_available == 0) disabled @endif>ADD TO CART</button>--}}
                         </div>
                     </div>
                 @endforeach
@@ -97,12 +99,12 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="banner__pic">
-                        <img src="img/banner/banner-1.jpg" alt="">
+                        <img src="{{asset('img/banner/banner-1.png')}}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="banner__pic">
-                        <img src="img/banner/banner-2.jpg" alt="">
+                        <img src="{{asset('img/banner/banner-2.png')}}" alt="">
                     </div>
                 </div>
             </div>
