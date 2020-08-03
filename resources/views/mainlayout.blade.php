@@ -52,8 +52,8 @@
                     @endforeach
                 </ul>
             </li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact Us</a></li>
+{{--            <li><a href="#">About Us</a></li>--}}
+            <li><a href="{{route('contactus')}}">Contact Us</a></li>
         </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>
@@ -116,8 +116,8 @@
                     <ul>
                         <li class="{{\Illuminate\Support\Facades\Route::currentRouteName() == 'home' ? 'active':null}}">
                             <a href="/">Home</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
+{{--                        <li><a href="#">About Us</a></li>--}}
+                        <li><a href="{{route('contactus')}}">Contact Us</a></li>
                     </ul>
                 </nav>
             </div>
@@ -176,7 +176,7 @@
                         <span>AJAB UNGA</span>
                         <h2>Home Baking <br />100% Fresh</h2>
                         <p>Free Delivery Available</p>
-                        <a href="#" class="primary-btn">SHOP NOW</a>
+                        <a href="/products/6" class="primary-btn">SHOP NOW</a>
                     </div>
                 </div>
                 @endif
@@ -198,7 +198,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__about__logo">
-                        <a href="#"><img src="img/logo.png" alt=""></a>
+                        <a href="#"><img src="{{asset('img/logo.png')}}" alt=""></a>
                     </div>
                     <ul>
                         <li>Address: Nairobi - Kenya</li>
@@ -211,9 +211,7 @@
                 <div class="footer__widget">
                     <h6>Useful Links</h6>
                     <ul>
-                        <li><a href="#">About Us</a></li>
                         <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>

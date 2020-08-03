@@ -181,6 +181,6 @@ class CartController extends Controller
             throw new Exception($exception->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Order was created successfully.');
+        return redirect()->route('order_history')->with('success', 'Order was created successfully.');
     }
 }
