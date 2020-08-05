@@ -107,14 +107,6 @@ class CartController extends Controller
 
     public function createOrder(Request $request)
     {
-        // INSERT INTO transactions(business_id,location_id,type,status,is_quotation,payment_status,contact_id,
-        //                           transaction_date,total_before_tax,tax_id,tax_amount,discount_type,
-        //                           final_total,is_direct_sale,is_suspend,exchange_rate,created_by,
-        //                           created_at,updated_at)
-        //VALUES (2, 2, 'sell','draft',0,'due',10,CURRENT_TIMESTAMP(),74.5600,2,10.4384,'percentage',
-        //        85.0000,0,0,1.000,3,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP());
-
-        // Get the auth user data
         $user = $request->user();
 
         $cart = Cart::content();
@@ -131,7 +123,7 @@ class CartController extends Controller
 
             $transactionID = DB::table('transactions')->insertGetId([
                 'business_id' => 2,
-                'location_id' => 2,
+                'location_id' => 3,
                 'type' => 'sell',
                 'status' => 'draft',
                 'is_quotation' => false,
@@ -144,7 +136,7 @@ class CartController extends Controller
                 'tax_amount' => $taxAmount,
                 'discount_type' => 'percentage',
                 'staff_note'=> $transactionCode,
-                'additional_notes'=> $transactionCode,
+                'additional_notes'=> 'M-Pesa PayBill',
                 'final_total' => $total,
                 'is_direct_sale' => false,
                 'is_suspend' => false,
@@ -155,14 +147,7 @@ class CartController extends Controller
             ]);
 
             collect($cart)->each(function ($item) use ($transactionID) {
-                // INSERT INTO transaction_sell_lines(transaction_id, product_id, variation_id, quantity,
-                //                                    unit_price_before_discount, unit_price,
-                //                                     line_discount_type, unit_price_inc_tax,item_tax,
-                //                                     created_at, updated_at)
-                //VALUES (38,54,54,1.0000,74.5600,74.5600,'fixed',74.5600,0.0000,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP());
-
                 $price = $item->price;
-
                 DB::table('transaction_sell_lines')->insert([
                     'transaction_id' => $transactionID,
                     'product_id' => $item->id,
@@ -177,6 +162,9 @@ class CartController extends Controller
                     'updated_at' => now(),
                 ]);
             });
+
+            Cart::destroy();
+
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
         }

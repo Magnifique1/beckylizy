@@ -74,17 +74,9 @@
                             </div>
                             <div class="product__discount__item__text">
                                 <span>{{$pd->cname}}</span>
-                                <h5><a href="#">{{$pd->name}}</a></h5>
+                                <h5>{{$pd->name}}</h5>
                                 <h5>KES {{number_format($pd->price_inc_tax)}}</h5>
                             </div>
-{{--                            <div class="product__details__quantity">--}}
-{{--                                <div class="quantity">--}}
-{{--                                    <div class="pro-qty">--}}
-{{--                                        <input type="text" value="1">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <button type="button" class="btn btn-success add-to-cart-btn" @if($pd->qty_available == 0) disabled @endif>ADD TO CART</button>--}}
                         </div>
                     </div>
                 @endforeach

@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <form action="{{ route('auth.login') }}" method="post">
+            <form action="{{ route('login') }}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-md-6 offset-md-3">

@@ -27,6 +27,10 @@ class CategoryProductsController extends Controller
                                         where vld.location_id = 3 and p.category_id = $id
                                         order by p.name asc");
 
+        if(!count($products)){
+            abort(404);
+        }
+
         return view('products', [
             'categories' => $categories,
             'products' => $products,

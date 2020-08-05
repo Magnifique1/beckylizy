@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('css/style.css')}}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 </head>
 
 <body>
@@ -38,7 +39,7 @@
 
     <div class="humberger__menu__widget">
         <div class="header__top__right__auth">
-            <a href="{{ route('auth.register') }}"><i class="fa fa-user"></i> Register</a>
+            <a href="{{ route('register') }}"><i class="fa fa-user"></i> Register</a>
         </div>
     </div>
 
@@ -88,15 +89,31 @@
 
                         @if(Auth::guest())
                             <div class="header__top__right__auth" style="margin-right: 10px">
-                                <a href="{{ route('auth.register') }}"><i class="fa fa-user"></i> Register</a>
+                                <a href="{{ route('register') }}"><i class="fa fa-user"></i> Register</a>
                             </div>
 
                             <div class="header__top__right__auth">
-                                <a href="/login"><i class="fa fa-user"></i> Login</a>
+                                <a href="{{ route('login') }}"><i class="fa fa-user"></i> Login</a>
                             </div>
                         @else
-                            <div class="header__top__right__auth">
+                            <div class="header__top__right__auth" style="margin-right: 10px">
                                 <a href="#"><i class="fa fa-user"></i> Welcome - {{Auth::user()->name}}</a>
+                            </div>
+
+                            <div class="header__top__right__auth" style="margin-right: 10px">
+                                <a href="{{route('order_history')}}"><i class="fa fa-shopping-cart"></i> My Orders </a>
+                            </div>
+
+                            <div class="header__top__right__auth">
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-sign-out"></i>
+                                    Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         @endif
                     </div>
@@ -236,5 +253,32 @@
 <script src="{{asset('js/mixitup.min.js')}}"></script>
 <script src="{{asset('js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#orderHistory').DataTable({
+            "responsive":true
+        });
+    } );
+</script>
+
+<script>
+    $(document).ready( function () {
+        $('#orderHistoryProducts').DataTable({
+            "responsive":true
+        });
+    } );
+</script>
+
+<script>
+    $(document).ready( function () {
+        $('#orderPayments').DataTable({
+            "searching": false,
+            "lengthChange": false,
+            "responsive":true
+        });
+    } );
+</script>
+
 </body>
 </html>

@@ -1,7 +1,7 @@
 @extends('mainlayout')
 
 @section('content')
-    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('img/breadcrumb.jpg') }}">
+    <section class="breadcrumb-section set-bg" data-setbg="{{ asset('img/breadcrumb.png') }}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -90,7 +90,8 @@
                                     <li>Subtotal <span>KES {{ $subtotal }}</span></li>
                                     <li>Total <span>KES {{ $subtotal }}</span></li>
                                 </ul>
-                                <button type="button" class="primary-btn" data-toggle="modal"
+                                <button type="button" class="primary-btn"
+                                        data-toggle="modal"
                                         data-target="#exampleModal">
                                     PROCEED TO CHECKOUT
                                 </button>
