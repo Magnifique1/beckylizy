@@ -63,9 +63,7 @@
                                     data-target="#COD" >
                                 CLICK HERE FOR CASH ON DELIVERY
                             </button>
-
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -154,7 +154,7 @@ class CartController extends Controller
                     'variation_id' => $item->id,
                     'quantity' => $item->qty,
                     'unit_price_before_discount' => $price,
-                    'unit_price' => $price,
+                    'unit_price' => $price / 1.14,
                     'line_discount_type' => 'fixed',
                     'unit_price_inc_tax' => $price,
                     'item_tax' => 0,
