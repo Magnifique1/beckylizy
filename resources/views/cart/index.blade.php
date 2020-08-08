@@ -87,8 +87,11 @@
                             <div class="shoping__checkout">
                                 <h5>Cart Total</h5>
                                 <ul>
-                                    <li>Subtotal <span>KES {{ $subtotal }}</span></li>
-                                    <li>Total <span>KES {{ $subtotal }}</span></li>
+                                    <li>Subtotal <span>KES {{ number_format($subtotal) }}</span></li>
+                                    @if($subtotal < 3000)
+                                        <li>Delivery Fees <span>KES {{ number_format($deliveryFees) }}</span></li>
+                                    @endif
+                                    <li>Total <span>KES {{ number_format($subtotal) }}</span></li>
                                 </ul>
                                 <button type="button" class="primary-btn"
                                         data-toggle="modal"
@@ -117,7 +120,7 @@
                                 directed to payment instructions.
                             @else
                                 <center>
-                                    <a href="{{ route('auth.login') }}" class="primary-btn">
+                                    <a href="{{ route('login') }}" class="primary-btn">
                                         <span class="text-center">Login to proceed</span>
                                     </a>
                                 </center>

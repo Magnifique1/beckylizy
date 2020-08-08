@@ -10,11 +10,21 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
+    /**
+     * @var int
+     */
+    private $deliveryFees;
+
+    public function __construct()
+    {
+        $this->deliveryFees = 150;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,9 +40,13 @@ class CartController extends Controller
 //        return($contents);
 
         // Get the cart subtotal
-        $subtotal = Cart::subtotal();
+        $subtotal = collect(Cart::content())->sum(function ($content) {
+            return $content->price * $content->qty;
+        });
 
-        return view('cart.index', compact('categories', 'contents', 'subtotal'));
+        $deliveryFees = $this->deliveryFees;
+
+        return view('cart.index', compact('categories', 'contents', 'subtotal', 'deliveryFees'));
     }
 
     /**
@@ -53,19 +67,17 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+//        return $request;
         // Extract the request data
         $productID = $request->get('_id');
         $productImage = $request->get('_pimage');
         $productName = $request->get('_pname');
         $quantity = $request->get('_pqty');
-
-        // Get the product data from the DB
-
         $price = $request->get('_pprice');
 
 
         // Add the product to the cart
-        Cart::add($productID, sprintf('%s', $productName), $price, $quantity, [
+        Cart::add($productID, sprintf('%s', $productName), $quantity, $price, [
             'image' => $productImage
         ]);
 
@@ -117,6 +129,11 @@ class CartController extends Controller
 
         $taxAmount = $total - ($total / 1.14);
 
+        // Check if the total is within the range free delivery range
+        if ($total < 3000) {
+            $total = $total + 150;
+        }
+
         try {
 
             $transactionCode = Str::random(6);
@@ -135,8 +152,8 @@ class CartController extends Controller
                 'tax_id' => 2,
                 'tax_amount' => $taxAmount,
                 'discount_type' => 'percentage',
-                'staff_note'=> $transactionCode,
-                'additional_notes'=> 'M-Pesa PayBill',
+                'staff_note' => $transactionCode,
+                'additional_notes' => 'M-Pesa PayBill',
                 'final_total' => $total,
                 'is_direct_sale' => false,
                 'is_suspend' => false,
