@@ -135,7 +135,6 @@ class CartController extends Controller
         }
 
         try {
-
             $transactionCode = Str::random(6);
 
             $transactionID = DB::table('transactions')->insertGetId([
