@@ -41,29 +41,45 @@
                         </table>
                         <br>
                         <br>
+
+
+
                         <div class="blog__details__widget">
-                            <h4>Pay Using M-Pesa Pay Bill:</h4>
-                            <br>
+
                             @foreach($payDetails as $pD)
-                            <ul>
-                                <li><span>PayBill Number:</span> 123456 </li>
-                                <li><span>Account Number:</span> {{$pD->staff_note}}</li>
-                                <li><span>Remaining Balance:</span> KES {{number_format(($pD->final_total - $pD->paid),2)}}</li>
-                            </ul>
+
+                                @if($pD->additional_notes == 'Cash On Delivery' && ($pD->final_total - $pD->paid) > 0)
+                                    <div class="alert alert-success" role="alert">
+                                        No Further Action Required You Have Opted For - {{$pD -> additional_notes}}
+                                    </div>
+                                @elseif(($pD->additional_notes != 'Cash On Delivery' && $pD->final_total - $pD->paid) > 0)
+                                    <h4>Pay Using M-Pesa Pay Bill:</h4>
+                                    <br>
+                                    <ul>
+                                        <li><span>PayBill Number:</span> 4029313 - BECKY LIZY ONLINE STORES </li>
+                                        <li><span>Account Number:</span> {{$pD->staff_note}}</li>
+                                        <li><span>Remaining Balance:</span> KES {{number_format(($pD->final_total - $pD->paid),2)}}</li>
+                                    </ul>
+                                    <br>
+                                    <div class="blog__details__widget">
+                                        <h4>Cash On Delivery:</h4>
+                                        <br>
+                                        <button type="submit" class="btn btn-success"
+                                                data-toggle="modal"
+                                                data-target="#COD" >
+                                            CLICK HERE FOR CASH ON DELIVERY
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="alert alert-success" role="alert">
+                                        You're All Set. This Order Is Fully Paid! Thank You For Your Order.
+                                    </div>
+                                @endif
                             @endforeach
-
                         </div>
 
-                        <br>
-                        <div class="blog__details__widget">
-                            <h4>Cash On Delivery:</h4>
-                            <br>
-                            <button type="submit" class="btn btn-success"
-                                    data-toggle="modal"
-                                    data-target="#COD" >
-                                CLICK HERE FOR CASH ON DELIVERY
-                            </button>
-                        </div>
+
+
                     </div>
                 </div>
             </div>

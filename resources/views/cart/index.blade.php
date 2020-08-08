@@ -91,7 +91,7 @@
                                     @if($subtotal < 3000)
                                         <li>Delivery Fees <span>KES {{ number_format($deliveryFees) }}</span></li>
                                     @endif
-                                    <li>Total <span>KES {{ number_format($subtotal) }}</span></li>
+                                    <li>Total <span>KES {{ number_format($) }}</span></li>
                                 </ul>
                                 <button type="button" class="primary-btn"
                                         data-toggle="modal"
