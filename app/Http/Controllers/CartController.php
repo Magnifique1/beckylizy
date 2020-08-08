@@ -42,6 +42,7 @@ class CartController extends Controller
             return $content->price * $content->qty;
         });
 
+        $total = $subtotal;
         $deliveryFees = $this->deliveryFees;
 
         // Check if the total is within the range free delivery range
