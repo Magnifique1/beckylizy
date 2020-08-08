@@ -88,10 +88,8 @@
                                 <h5>Cart Total</h5>
                                 <ul>
                                     <li>Subtotal <span>KES {{ number_format($subtotal) }}</span></li>
-                                    @if($subtotal < 3000)
-                                        <li>Delivery Fees <span>KES {{ number_format($deliveryFees) }}</span></li>
-                                    @endif
-                                    <li>Total <span>KES {{ number_format($subtotal) }}</span></li>
+                                    <li>Delivery Fees <span>KES {{ number_format($deliveryFees) }}</span></li>
+                                    <li>Total <span>KES {{ number_format($total) }}</span></li>
                                 </ul>
                                 <button type="button" class="primary-btn"
                                         data-toggle="modal"
