@@ -32,7 +32,8 @@ class OrderHistoryProductsController extends Controller
 
         $categories = CategoryProductsController::getCategories();
 
-        $orderProducts = DB::select("select tsl.transaction_id, p.name,tsl.quantity,tsl.unit_price_inc_tax, (tsl.quantity * tsl.unit_price_inc_tax) as subtotal,
+        $orderProducts = DB::select("select tsl.transaction_id, p.name,tsl.quantity,tsl.unit_price_inc_tax,
+                                                (tsl.quantity * tsl.unit_price_inc_tax) as subtotal,
                                                 t.staff_note from transaction_sell_lines tsl
                                                 inner join products p on tsl.product_id = p.id
                                                 inner join transactions t on tsl.transaction_id = t.id

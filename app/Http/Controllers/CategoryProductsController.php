@@ -11,7 +11,7 @@ class CategoryProductsController extends Controller
         $categories = DB::select("select c.id,c.name,count(p.id) as pcount from categories c
                                         inner join products p on c.id = p.category_id
                                         inner join variation_location_details vld on p.id = vld.product_id
-                                        where c.business_id = 2 and vld.location_id = 3
+                                        where c.business_id = 2 and vld.location_id = 2
                                         group by c.id,c.name
                                         order by c.name asc");
 
@@ -24,7 +24,7 @@ class CategoryProductsController extends Controller
                                         inner join variation_group_prices vgp on v.id = vgp.variation_id
                                         inner join variation_location_details vld on p.id = vld.product_id and v.id = vld.variation_id
                                         inner join categories c on p.category_id = c.id
-                                        where vld.location_id = 3 and p.category_id = $id
+                                        where vld.location_id = 2 and p.category_id = $id
                                         order by p.name asc");
 
         if(!count($products)){
@@ -47,7 +47,7 @@ class CategoryProductsController extends Controller
         return DB::select("select c.id,c.name,count(p.id) as pcount from categories c
                                         inner join products p on c.id = p.category_id
                                         inner join variation_location_details vld on p.id = vld.product_id
-                                        where c.business_id = 2 and vld.location_id = 3
+                                        where c.business_id = 2 and vld.location_id = 2
                                         group by c.id,c.name
                                         order by c.name asc");
     }

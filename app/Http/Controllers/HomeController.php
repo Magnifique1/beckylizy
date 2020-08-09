@@ -20,7 +20,7 @@ class HomeController extends Controller
         $categories = DB::select("select c.id,c.name,count(p.id) as pcount from categories c
                                         inner join products p on c.id = p.category_id
                                         inner join variation_location_details vld on p.id = vld.product_id
-                                        where c.business_id = 2 and vld.location_id = 3 and p.image is not null
+                                        where c.business_id = 2 and vld.location_id = 2 and p.image is not null
                                         group by c.id,c.name
                                         order by c.name asc");
 
@@ -28,7 +28,7 @@ class HomeController extends Controller
         $categories_featured = DB::select("select c.id,c.name,count(p.id) as pcount from categories c
                                         inner join products p on c.id = p.category_id
                                         inner join variation_location_details vld on p.id = vld.product_id
-                                        where c.business_id = 2 and vld.location_id = 3 and p.image is not null
+                                        where c.business_id = 2 and vld.location_id = 2 and p.image is not null
                                         group by c.id,c.name
                                         order by c.name asc limit 5");
 
@@ -39,8 +39,8 @@ class HomeController extends Controller
                                         inner join variation_group_prices vgp on v.id = vgp.variation_id
                                         inner join variation_location_details vld on p.id = vld.product_id and v.id = vld.variation_id
                                         inner join categories c on p.category_id = c.id
-                                        where vld.location_id = 3 and p.image is not null
-                                        order by p.name asc");
+                                        where vld.location_id = 2 and p.image is not null
+                                        order by p.name asc limit 20");
 
 //        $getuser  = DB::select("select name from contacts where id = $userID");
 

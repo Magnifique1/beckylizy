@@ -133,7 +133,7 @@ class CartController extends Controller
 
             $transactionID = DB::table('transactions')->insertGetId([
                 'business_id' => 2,
-                'location_id' => 3,
+                'location_id' => 2,
                 'type' => 'sell',
                 'status' => 'draft',
                 'is_quotation' => false,
@@ -152,7 +152,7 @@ class CartController extends Controller
                 'is_suspend' => false,
                 'exchange_rate' => 1,
                 'shipping_charges' => $total < 1500 ? $this->deliveryFees : 0,
-                'created_by' => 3,
+                'created_by' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

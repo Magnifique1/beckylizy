@@ -193,7 +193,7 @@
                         <span>AJAB UNGA</span>
                         <h2>Home Baking <br />100% Fresh</h2>
                         <p>Free Delivery Available</p>
-                        <a href="/products/6" class="primary-btn">SHOP NOW</a>
+                        <a href="/products/24" class="primary-btn">SHOP NOW</a>
                     </div>
                 </div>
                 @endif
