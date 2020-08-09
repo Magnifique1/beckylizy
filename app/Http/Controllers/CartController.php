@@ -8,7 +8,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -37,27 +36,27 @@ class CartController extends Controller
         // Get the product in the cart
         $contents = Cart::content();
 
-//        return($contents);
 
         // Get the cart subtotal
         $subtotal = collect(Cart::content())->sum(function ($content) {
             return $content->price * $content->qty;
         });
 
+        $total = $subtotal;
         $deliveryFees = $this->deliveryFees;
 
-        return view('cart.index', compact('categories', 'contents', 'subtotal', 'deliveryFees'));
+        // Check if the total is within the range free delivery range
+        if ($subtotal < 1500) {
+            $total = $subtotal + 150;
+        } else {
+            $deliveryFees = 0;
+        }
+
+        return view('cart.index', compact(
+            'categories', 'contents', 'subtotal', 'deliveryFees', 'total'
+        ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -77,7 +76,7 @@ class CartController extends Controller
 
 
         // Add the product to the cart
-        Cart::add($productID, sprintf('%s', $productName), $quantity, $price, [
+        Cart::add($productID, sprintf('%s', $productName),  $price, $quantity, [
             'image' => $productImage
         ]);
 
@@ -129,11 +128,6 @@ class CartController extends Controller
 
         $taxAmount = $total - ($total / 1.14);
 
-        // Check if the total is within the range free delivery range
-        if ($total < 3000) {
-            $total = $total + 150;
-        }
-
         try {
             $transactionCode = Str::random(6);
 
@@ -157,6 +151,7 @@ class CartController extends Controller
                 'is_direct_sale' => false,
                 'is_suspend' => false,
                 'exchange_rate' => 1,
+                'shipping_charges' => $total < 1500 ? $this->deliveryFees : 0,
                 'created_by' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),

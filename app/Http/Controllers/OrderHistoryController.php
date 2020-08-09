@@ -18,7 +18,8 @@ class OrderHistoryController extends Controller
         $categories = CategoryProductsController::getCategories();
 
         $orders = DB::select("select t.id,t.transaction_date,t.status, t.payment_status, t.invoice_no,t.staff_note,
-                                    t.additional_notes, t.total_before_tax,t.tax_amount,t.final_total
+                                    t.additional_notes, t.total_before_tax,t.tax_amount,
+                                    IF(t.payment_status = 'paid',t.final_total,(t.final_total+t.shipping_charges)) as final_total
                                     from transactions t
                                     where t.contact_id = $userID order by t.transaction_date desc");
 

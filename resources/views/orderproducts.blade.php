@@ -29,7 +29,7 @@
                                     </td>
 
                                     <td>
-                                        {{number_format($oP->unit_price,2)}}
+                                        {{number_format($oP->unit_price_inc_tax,2)}}
                                     </td>
 
                                     <td>
@@ -48,17 +48,24 @@
 
                             @foreach($payDetails as $pD)
 
-                                @if($pD->additional_notes == 'Cash On Delivery' && ($pD->final_total - $pD->paid) > 0)
+                                <ul>
+                                    <li><span>Sub-Total:</span> KES {{number_format($pD->final_total,2)}}</li>
+                                    <li><span>Deliver Charges:</span> KES {{number_format($pD->shipping_charges,2)}}</li>
+                                    <li><span>Remaining Balance:</span> KES {{number_format(($pD->Total - $pD->paid),2)}}</li>
+                                </ul>
+                            <br>
+                            <br>
+                                @if($pD->additional_notes == 'Cash On Delivery' && ($pD->Total - $pD->paid) > 0)
                                     <div class="alert alert-success" role="alert">
                                         No Further Action Required You Have Opted For - {{$pD -> additional_notes}}
                                     </div>
-                                @elseif(($pD->additional_notes != 'Cash On Delivery' && $pD->final_total - $pD->paid) > 0)
+                                @elseif(($pD->additional_notes != 'Cash On Delivery' && $pD->Total - $pD->paid) > 0)
                                     <h4>Pay Using M-Pesa Pay Bill:</h4>
                                     <br>
                                     <ul>
                                         <li><span>PayBill Number:</span> 4029313 - BECKY LIZY ONLINE STORES </li>
                                         <li><span>Account Number:</span> {{$pD->staff_note}}</li>
-                                        <li><span>Remaining Balance:</span> KES {{number_format(($pD->final_total - $pD->paid),2)}}</li>
+                                        <li><span>Amount:</span> KES {{number_format(($pD->Total - $pD->paid),2)}}</li>
                                     </ul>
                                     <br>
                                     <div class="blog__details__widget">
